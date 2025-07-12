@@ -1,0 +1,65 @@
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone_number VARCHAR(15),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE tours (
+    TourID INT AUTO_INCREMENT PRIMARY KEY,
+    TourName VARCHAR(255) NOT NULL,
+    Location VARCHAR(255) NOT NULL,
+    CostPerPerson DECIMAL(10, 2) NOT NULL,
+    Distance INT NOT NULL,
+    NumberOfSeats INT NOT NULL,
+    Description TEXT
+);
+
+
+INSERT INTO Tours (TourName, Location, CostPerPerson, Distance, NumberOfSeats, Description, TourImage)
+VALUES
+('Taj Mahal Tour', 'Agra, India', 120.00, 200.0, 15, 'Visit the majestic Taj Mahal, one of the Seven Wonders of the World.', 'https://ik.imagekit.io/usmoswa6r/TourPics/Taj%20Mahal%20Tour.jpg?updatedAt=1745665431415'),
+
+('Goa Beach Tour', 'Goa, India', 90.00, 300.0, 20, 'Relax on the beautiful beaches of Goa and enjoy the sunset.', 'https://ik.imagekit.io/usmoswa6r/TourPics/Goa%20Beach%20Tour.jpeg?updatedAt=1745665430748'),
+
+('Himalayan Adventure', 'Himachal Pradesh, India', 250.00, 500.0, 10, 'Experience the breathtaking views of the Himalayan mountains.', 'https://ik.imagekit.io/usmoswa6r/TourPics/Himalayan%20Adventure.jpg?updatedAt=1745665431843'),
+
+('Kerala Backwaters', 'Kerala, India', 180.00, 350.0, 12, 'Explore the serene backwaters of Kerala on a traditional houseboat.', 'https://ik.imagekit.io/usmoswa6r/TourPics/Kerala%20Backwaters.jpg?updatedAt=1745665433535'),
+
+('Jaipur Royal Tour', 'Jaipur, India', 150.00, 150.0, 10, 'Discover the royal history and palaces of Jaipur, the Pink City.', 'https://ik.imagekit.io/usmoswa6r/TourPics/Jaipur%20Royal%20Tour.jpg?updatedAt=1745665430367');
+
+
+
+
+mysql> CREATE TABLE travel_bookings (
+    ->     TravelBookingID INT AUTO_INCREMENT PRIMARY KEY,
+    ->     UserID INT NOT NULL,
+    ->     TransportType ENUM('Bus', 'Train', 'Flight') NOT NULL,
+    ->     FromLocation VARCHAR(255) NOT NULL,
+    ->     ToLocation VARCHAR(255) NOT NULL,
+    ->     DepartureDate DATE NOT NULL,
+    ->     Guests INT NOT NULL,
+    ->     TotalPrice DECIMAL(10,2) NOT NULL,
+    ->     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ->     FOREIGN KEY (UserID) REFERENCES users(id)
+    -> );
+	
+	 CREATE TABLE tour_bookings (
+    ->     BookingID INT AUTO_INCREMENT PRIMARY KEY,
+    ->     UserID INT NOT NULL,
+    ->     TourID INT NOT NULL,
+    ->     FullName VARCHAR(255) NOT NULL,
+    ->     Phone VARCHAR(15) NOT NULL,
+    ->     Date DATE NOT NULL,
+    ->     Guests INT NOT NULL,
+    ->     TotalPrice DECIMAL(10, 2) NOT NULL,
+    ->     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ->     FOREIGN KEY (UserID) REFERENCES users(id),
+    ->     FOREIGN KEY (TourID) REFERENCES tours(TourID)
+    -> );
+
+
+
